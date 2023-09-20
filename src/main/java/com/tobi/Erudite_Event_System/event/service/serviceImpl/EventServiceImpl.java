@@ -67,6 +67,7 @@ public class EventServiceImpl implements EventService {
                     .ticketCapacity(eventDto.getTicketCapacity())
                     .ticketPrice(eventDto.getTicketPrice())
                     .ticketDescription(eventDto.getTicketDescription())
+                    .users(organizer.get())
                     .build();
             repository.save(event);
 
@@ -89,8 +90,12 @@ public class EventServiceImpl implements EventService {
     @Override
     public ResponseEntity<CustomEventResponse> getAllEventByName(int page, int size, String eventName) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("startDate").ascending());
+
         List<Events> eventsList = repository.findByEventName(eventName, pageRequest);
+
         boolean eventExist = repository.existsByEventName(eventName);
+        log.info("exist: "+ eventExist);
+
         if (!eventExist){
             return ResponseEntity.badRequest().body(CustomEventResponse.builder()
                             .responseCode(ResponseUtils.UN_SUCCESSFUL_CODE)
