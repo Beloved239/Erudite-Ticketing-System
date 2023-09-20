@@ -173,15 +173,15 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<CustomResponse> updateCredentials(Long userId, UsersUpdateRequest request) {
         boolean existsById = userRepository.existsById(userId);
         if (!existsById){
+            log.info("organizer: ");
             return ResponseEntity.badRequest().body(CustomResponse.builder()
                     .responseCode(HttpStatus.BAD_REQUEST.toString())
                     .responseMessage(ResponseUtils.ORGANIZER_DOES_NOT_EXIST_MESSAGE)
                     .responseBody("Provide a valid id")
                     .build());
         }else {
-            Users users = userRepository.findById(userId)
-                    .orElseThrow(() -> new UsernameNotFoundException("User with this Id :{} not found" + userId));
-
+            Users users = userRepository.findById(userId).get();
+            log.info("user status: "+ users.getName());
             users.setAddress(request.getAddress());
             users.setName(request.getName());
             users.setPassword(passwordEncoder.encode(request.getPassword()));
