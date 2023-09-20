@@ -10,9 +10,9 @@ import java.io.IOException;
 public interface EventService {
     ResponseEntity<CustomResponse> createEvent(Long id, EventDto eventDto);
 
-    ResponseEntity<CustomEventResponse> getAllEventByName(String eventName);
+    ResponseEntity<CustomEventResponse> getAllEventByName(int page, int size, String eventName);
 
-    ResponseEntity<CustomEventResponse> getAllUpcomingEvents();
+    ResponseEntity<CustomEventResponse> getAllUpcomingEvents(int page, int size);
     ResponseEntity<BookEventResponse> bookEvent(Long organizerId, Long eventId, BookEventRequest request) throws IOException, MissingRequestValueException, WriterException;
 
 

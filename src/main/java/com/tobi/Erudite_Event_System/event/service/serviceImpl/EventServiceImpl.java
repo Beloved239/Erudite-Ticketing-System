@@ -16,6 +16,8 @@ import com.tobi.Erudite_Event_System.users.repository.UserRepository;
 import com.tobi.Erudite_Event_System.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -85,8 +87,9 @@ public class EventServiceImpl implements EventService {
 
     }
     @Override
-    public ResponseEntity<CustomEventResponse> getAllEventByName(String eventName) {
-        List<Events> eventsList = repository.findByEventName(eventName);
+    public ResponseEntity<CustomEventResponse> getAllEventByName(int page, int size, String eventName) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("startDate").ascending());
+        List<Events> eventsList = repository.findByEventName(eventName, pageRequest);
         boolean eventExist = repository.existsByEventName(eventName);
         if (!eventExist){
             return ResponseEntity.badRequest().body(CustomEventResponse.builder()
@@ -121,8 +124,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<CustomEventResponse> getAllUpcomingEvents() {
-
+    public ResponseEntity<CustomEventResponse> getAllUpcomingEvents(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page,size, Sort.by("startDate").ascending());
 
         LocalTime now = LocalTime.now();
         boolean existsBeforeToday = repository.existsByStartTimeBefore(now);
@@ -135,7 +138,7 @@ public class EventServiceImpl implements EventService {
                     .build());
         } else {
             LocalDate today = LocalDate.now();
-            List<Events> eventsList = repository.findAllByStartDateAfter(today);
+            List<Events> eventsList = repository.findAllByStartDateAfter(today,pageRequest);
 
             List<EventResponse> responses = new ArrayList<>();
             for (Events element : eventsList) {

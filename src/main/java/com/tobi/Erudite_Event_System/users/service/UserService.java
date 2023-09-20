@@ -13,7 +13,7 @@ public interface UserService {
     ResponseEntity<CustomResponse> login(LoginRequest request);
     ResponseEntity<CustomResponse> updateCredentials(Long userId, UsersUpdateRequest request);
     ResponseEntity<?> getSingleUserById(Long userId);
-    ResponseEntity<List<CredentialResponse>>  getAllOrganizer();
+    ResponseEntity<List<CredentialResponse>>  getAllOrganizer(int page, int size);
     ResponseEntity<CustomResponse> resetPassword(LoginRequest request);
     ResponseEntity<CustomResponse> getUserByEmail(String email);
 

@@ -12,6 +12,9 @@ import com.tobi.Erudite_Event_System.role.repository.RoleRepository;
 import com.tobi.Erudite_Event_System.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -78,8 +81,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public ResponseEntity<RoleResponse> getAllRoles() {
-        List<Role> roles = roleRepository.findAll();
+    public ResponseEntity<RoleResponse> getAllRoles(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("roleName").ascending());
+        Page<Role> roles = roleRepository.findAll(pageRequest);
         List<RoleRequest> roleRequestList = new ArrayList<>();
 
         for (Role newRole: roles){

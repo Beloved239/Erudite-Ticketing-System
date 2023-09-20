@@ -59,14 +59,17 @@ public class GeneralController {
 
     @GetMapping("/available/event")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<CustomEventResponse> getAllAvailableEvents(@RequestParam(value = "eventName")String eventName){
-        return eventService.getAllEventByName(eventName);
+    public ResponseEntity<CustomEventResponse> getAllAvailableEvents(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
+                                                                     @RequestParam(value = "pageSize", defaultValue = "8", required = false) int size,
+                                                                     @RequestParam(value = "eventName")String eventName){
+        return eventService.getAllEventByName(page, size, eventName);
     }
 
     @GetMapping("/discover/allEvent")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<CustomEventResponse> discoverEVents(){
-        return eventService.getAllUpcomingEvents();
+    public ResponseEntity<CustomEventResponse> discoverEVents(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
+                                                              @RequestParam(value = "pageSize", defaultValue = "8", required = false) int size){
+        return eventService.getAllUpcomingEvents(page, size);
     }
 
 

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 public interface RoleService {
     ResponseEntity<CustomResponse> createRole(RoleRequest request);
     ResponseEntity<CustomResponse> deleteRole(Long roleId);
-    ResponseEntity<RoleResponse> getAllRoles();
+    ResponseEntity<RoleResponse> getAllRoles(int page, int size);
     ResponseEntity<RoleResponse> getRoleById(Long roleId);
 
 }
