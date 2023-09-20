@@ -14,6 +14,9 @@ import com.tobi.Erudite_Event_System.users.repository.UserRepository;
 import com.tobi.Erudite_Event_System.utils.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -227,8 +230,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<List<CredentialResponse>> getAllOrganizer() {
-        List<Users> usersList = userRepository.findAll();
+    public ResponseEntity<List<CredentialResponse>> getAllOrganizer(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt").ascending());
+        Page<Users> usersList = userRepository.findAll(pageRequest);
         log.info("Organizers: "+ usersList);
         List<CredentialResponse> responseList = new ArrayList<>();
         for (Users users : usersList){

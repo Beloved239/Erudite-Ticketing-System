@@ -21,9 +21,6 @@ public class PayStackController {
         return paystackService.initializePayment(initializePaymentDto);
     }
 
-    @GetMapping("/verifyPayment/{reference}")
-    public PaymentVerificationResponse paymentVerification(@PathVariable(value = "reference") String reference) throws Exception {
-        return paystackService.paymentVerification(reference);
-    }
+
 }
 

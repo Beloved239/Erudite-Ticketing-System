@@ -2,8 +2,11 @@ package com.tobi.Erudite_Event_System.event.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -40,5 +43,11 @@ public class Events {
 
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
     private List<Booking> bookings;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 }

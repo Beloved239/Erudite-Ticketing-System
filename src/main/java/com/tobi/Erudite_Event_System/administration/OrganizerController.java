@@ -39,8 +39,9 @@ public class OrganizerController{
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<CredentialResponse>> getAllAttendees(){
-        return userService.getAllOrganizer();
+    public ResponseEntity<List<CredentialResponse>> getAllOrganizers(@RequestParam(value = "pageNo",defaultValue = "0", required = false) int page,
+                                                                    @RequestParam(value = "pageSize", defaultValue = "8", required = false) int size){
+        return userService.getAllOrganizer(page, size);
     }
 
     @GetMapping("/single/user")
@@ -56,13 +57,6 @@ public class OrganizerController{
     public ResponseEntity<CustomResponse> updateRecord(@RequestParam(value = "userId")Long userId,
                                                        @RequestBody UsersUpdateRequest request){
         return userService.updateCredentials(userId, request);
-    }
-
-    @GetMapping("/getAll/organizer")
-    @PreAuthorize("hasRole('ORGANIZER')")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<CredentialResponse>> getAllOrganizers(){
-        return userService.getAllOrganizer();
     }
 
     @GetMapping("/getAll/getSingleOrganizer")
@@ -97,13 +91,17 @@ public class OrganizerController{
     @GetMapping("/get/allRoles")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ORGANIZER')")
-    public ResponseEntity<RoleResponse> getAllRoles(){
-        return roleService.getAllRoles();
+    public ResponseEntity<RoleResponse> getAllRoles(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
+                                                    @RequestParam(value = "pageSize", defaultValue = "8", required = false) int size){
+        return roleService.getAllRoles(page,size);
     }
 
+
+    //Payment Endpoints
     @GetMapping("/verifyPayment")
     @ResponseStatus(HttpStatus.OK)
-    public PaymentVerificationResponse paymentVerification(@RequestParam(value = "reference") String reference) throws Exception {
+    public PaymentVerificationResponse paymentVerification(@RequestParam(value = "reference") String reference)
+                                                                    throws Exception {
         return paystackService.paymentVerification(reference);
     }
 
