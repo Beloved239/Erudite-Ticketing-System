@@ -9,6 +9,18 @@ import com.tobi.Erudite_Event_System.payment.dto.PaymentVerificationResponse;
 import com.tobi.Erudite_Event_System.payment.service.PayStackService;
 import com.tobi.Erudite_Event_System.users.service.UserService;
 import com.tobi.Erudite_Event_System.role.service.RoleService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +34,46 @@ import java.util.List;
 @RestController
 @RequestMapping("api/organizer")
 @RequiredArgsConstructor
+//@OpenAPIDefinition(
+//        info = @Info(
+//                contact = @Contact(
+//                        name = "Beloved",
+//                        email = "adettob@gmail.com",
+//                        url = "https://www.linkedin.com/in/adebanjo-oluwatobi-6bb25b156/"
+//                ),
+//                description = "OpenApi documentation for Event Ticketing System",
+//                title = "Erudite OpenApi Specification",
+//                version = "v1",
+//                license = @License(
+//                        name = "License name",
+//                        url = "https://url.com"
+//                ),
+//                termsOfService = "Terms of service"
+//        ),
+//        servers = {
+////                @Server(
+////                        description = "Prod ENV",
+////                        url = "https://url.com"
+////                ),
+//                @Server(
+//                        description = "Local ENV",
+//                        url = "http://localhost:8080"
+//                )
+//        }
+//)
+//@SecurityScheme(
+//        name = "Authorization",
+//        description = "JWT auth description",
+//        scheme = "bearer",
+//        type = SecuritySchemeType.HTTP,
+//        bearerFormat = "JWT",
+//        in = SecuritySchemeIn.HEADER
+//)
+@Tag(
+        name = "Organizer Controller REST APIs/Endpoint",
+        description = "Endpoints for creating event and other application management"
+)
+@SecurityRequirement(name = "bearerAuth")
 public class OrganizerController{
 
     private final UserService userService;
@@ -51,6 +103,22 @@ public class OrganizerController{
     }
 
     //Organizer Endpoints
+    @Operation(
+            description = "Signup endpoint for organizers",
+            summary = "This endpoint allows user create account",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+
+            }
+
+    )
     @PutMapping("/update")
     @PreAuthorize("hasRole('ORGANIZER')")
     @ResponseStatus(HttpStatus.OK)

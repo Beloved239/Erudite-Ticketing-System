@@ -70,10 +70,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/image/**").permitAll()
-                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/**").permitAll()
+                                .requestMatchers(
+                                        "/v3/api-docs",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html").permitAll()
                                 .requestMatchers(UNSECURED_END_POINTS).permitAll()
                                 .requestMatchers(SECURED_ORGANIZER_END_POINTS).hasRole("ORGANIZER")
-//                                .requestMatchers(SECURED_ATTENDEE_END_POINTS).hasRole("ATTENDEE")
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());

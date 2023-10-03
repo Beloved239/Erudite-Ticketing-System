@@ -47,10 +47,13 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private Example example;
+
 
     @Override
     @Transactional
     public ResponseEntity<CustomResponse> signUp(OrganizerSignUpRequest request) {
+
 
         if (!patternMatches(request.getEmail(), ResponseUtils.REGEX_PATTERN)){
             return ResponseEntity.badRequest().body(CustomResponse.builder()

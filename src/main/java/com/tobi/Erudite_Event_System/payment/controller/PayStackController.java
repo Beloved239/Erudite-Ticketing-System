@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("api/payment")
+//@RestController
+//@RequestMapping("api/payment")
 @RequiredArgsConstructor
 public class PayStackController {
 
