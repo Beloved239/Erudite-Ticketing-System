@@ -165,7 +165,7 @@ public class GeneralController {
 
     @Operation(
             description = "Discover Event endpoint",
-            summary = "This endpoint allows for event discovery: i.e Get All Events",
+            summary = "This endpoint allows for event discovery: i.e Get All Registered Events",
             responses = {
                     @ApiResponse(
                             description = "Success",

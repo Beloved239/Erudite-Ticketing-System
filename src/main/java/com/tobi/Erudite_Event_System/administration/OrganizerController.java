@@ -34,41 +34,41 @@ import java.util.List;
 @RestController
 @RequestMapping("api/organizer")
 @RequiredArgsConstructor
-//@OpenAPIDefinition(
-//        info = @Info(
-//                contact = @Contact(
-//                        name = "Beloved",
-//                        email = "adettob@gmail.com",
-//                        url = "https://www.linkedin.com/in/adebanjo-oluwatobi-6bb25b156/"
-//                ),
-//                description = "OpenApi documentation for Event Ticketing System",
-//                title = "Erudite OpenApi Specification",
-//                version = "v1",
-//                license = @License(
-//                        name = "License name",
-//                        url = "https://url.com"
-//                ),
-//                termsOfService = "Terms of service"
-//        ),
-//        servers = {
-////                @Server(
-////                        description = "Prod ENV",
-////                        url = "https://url.com"
-////                ),
-//                @Server(
-//                        description = "Local ENV",
-//                        url = "http://localhost:8080"
-//                )
-//        }
-//)
-//@SecurityScheme(
-//        name = "Authorization",
-//        description = "JWT auth description",
-//        scheme = "bearer",
-//        type = SecuritySchemeType.HTTP,
-//        bearerFormat = "JWT",
-//        in = SecuritySchemeIn.HEADER
-//)
+@OpenAPIDefinition(
+        info = @Info(
+                contact = @Contact(
+                        name = "Beloved",
+                        email = "adettob@gmail.com",
+                        url = "https://www.linkedin.com/in/adebanjo-oluwatobi-6bb25b156/"
+                ),
+                description = "OpenApi documentation for Event Ticketing System",
+                title = "Erudite OpenApi Specification",
+                version = "v1",
+                license = @License(
+                        name = "License name",
+                        url = "https://url.com"
+                ),
+                termsOfService = "Terms of service"
+        ),
+        servers = {
+                @Server(
+                        description = "Prod ENV",
+                        url = "https://url.com"
+                ),
+                @Server(
+                        description = "Local ENV",
+                        url = "http://localhost:8080"
+                )
+        }
+)
+@SecurityScheme(
+        name = "Authorization",
+        description = "JWT auth description",
+        scheme = "bearer",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        in = SecuritySchemeIn.HEADER
+)
 @Tag(
         name = "Organizer Controller REST APIs/Endpoint",
         description = "Endpoints for creating event and other application management"

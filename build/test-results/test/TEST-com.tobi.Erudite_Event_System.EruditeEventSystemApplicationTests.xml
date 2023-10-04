@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-03T17:05:04" hostname="TOBIA-IACADEMY" time="1.534">
+<testsuite name="com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-10-04T11:20:51" hostname="TOBIA-IACADEMY" time="1.657">
   <properties/>
-  <testcase name="contextLoads()" classname="com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests" time="1.534"/>
+  <testcase name="contextLoads()" classname="com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests" time="1.657"/>
   <system-out><![CDATA[Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
-18:04:33.303 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests]: EruditeEventSystemApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-18:04:33.448 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.tobi.Erudite_Event_System.EruditeEventSystemApplication for test class com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests
+12:20:21.121 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests]: EruditeEventSystemApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:20:21.274 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.tobi.Erudite_Event_System.EruditeEventSystemApplication for test class com.tobi.Erudite_Event_System.EruditeEventSystemApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,24 +14,24 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.2)
 
-2023-10-03T18:04:33.921+01:00  INFO 17900 --- [    Test worker] c.t.E.EruditeEventSystemApplicationTests : Starting EruditeEventSystemApplicationTests using Java 19.0.2 with PID 17900 (started by Oluwatobi.Adebanjo in C:\Users\oluwatobi.adebanjo\Downloads\SpringBoot_Projects\Erudite_Event_System)
-2023-10-03T18:04:33.922+01:00  INFO 17900 --- [    Test worker] c.t.E.EruditeEventSystemApplicationTests : No active profile set, falling back to 1 default profile: "default"
-2023-10-03T18:04:34.876+01:00  INFO 17900 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-10-03T18:04:35.076+01:00  INFO 17900 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 188 ms. Found 8 JPA repository interfaces.
-2023-10-03T18:04:35.711+01:00  INFO 17900 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-10-03T18:04:35.818+01:00  INFO 17900 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
-2023-10-03T18:04:35.823+01:00  INFO 17900 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
-2023-10-03T18:04:36.049+01:00  INFO 17900 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-03T18:04:36.396+01:00  INFO 17900 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2023-10-03T18:04:36.498+01:00  INFO 17900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-10-03T18:04:41.760+01:00  INFO 17900 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@452ec287
-2023-10-03T18:04:41.767+01:00  INFO 17900 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-10-03T18:04:43.095+01:00  INFO 17900 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
-2023-10-03T18:04:44.102+01:00  INFO 17900 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-10-03T18:05:01.005+01:00  INFO 17900 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-10-03T18:05:02.153+01:00  WARN 17900 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-10-03T18:05:03.481+01:00  INFO 17900 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5c452e69, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5c519681, org.springframework.security.web.context.SecurityContextHolderFilter@14501070, org.springframework.security.web.header.HeaderWriterFilter@1368ed98, org.springframework.web.filter.CorsFilter@5d6d6533, org.springframework.security.web.authentication.logout.LogoutFilter@3debeb5e, com.tobi.Erudite_Event_System.security.config.JwtAuthenticationFilter@2553fbd0, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@74ee8f57, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4a577b99, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@440309c5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@372153eb, org.springframework.security.web.session.SessionManagementFilter@23bf19c9, org.springframework.security.web.access.ExceptionTranslationFilter@15d2c2ca, org.springframework.security.web.access.intercept.AuthorizationFilter@2296ed0d]
-2023-10-03T18:05:04.063+01:00  INFO 17900 --- [    Test worker] c.t.E.EruditeEventSystemApplicationTests : Started EruditeEventSystemApplicationTests in 30.439 seconds (process running for 32.072)
+2023-10-04T12:20:21.866+01:00  INFO 7392 --- [    Test worker] c.t.E.EruditeEventSystemApplicationTests : Starting EruditeEventSystemApplicationTests using Java 19.0.2 with PID 7392 (started by Oluwatobi.Adebanjo in C:\Users\oluwatobi.adebanjo\Downloads\SpringBoot_Projects\Erudite_Event_System)
+2023-10-04T12:20:21.868+01:00  INFO 7392 --- [    Test worker] c.t.E.EruditeEventSystemApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2023-10-04T12:20:23.216+01:00  INFO 7392 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-10-04T12:20:23.506+01:00  INFO 7392 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 278 ms. Found 8 JPA repository interfaces.
+2023-10-04T12:20:24.275+01:00  INFO 7392 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-10-04T12:20:24.392+01:00  INFO 7392 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-10-04T12:20:24.396+01:00  INFO 7392 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-10-04T12:20:24.630+01:00  INFO 7392 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-04T12:20:24.837+01:00  INFO 7392 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-10-04T12:20:24.856+01:00  INFO 7392 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-10-04T12:20:30.692+01:00  INFO 7392 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@513fab1e
+2023-10-04T12:20:30.700+01:00  INFO 7392 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-10-04T12:20:32.246+01:00  INFO 7392 --- [    Test worker] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-10-04T12:20:33.372+01:00  INFO 7392 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-10-04T12:20:47.506+01:00  INFO 7392 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-10-04T12:20:49.246+01:00  WARN 7392 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-10-04T12:20:51.275+01:00  INFO 7392 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c152246, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@65067d90, org.springframework.security.web.context.SecurityContextHolderFilter@3c2d4274, org.springframework.security.web.header.HeaderWriterFilter@14501070, org.springframework.web.filter.CorsFilter@2380e8d4, org.springframework.security.web.authentication.logout.LogoutFilter@4973dacf, com.tobi.Erudite_Event_System.security.config.JwtAuthenticationFilter@5a86112a, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7c5eb88c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6960e7a6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@63fe055, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@53b5356, org.springframework.security.web.session.SessionManagementFilter@5e5f5ddf, org.springframework.security.web.access.ExceptionTranslationFilter@7def08fc, org.springframework.security.web.access.intercept.AuthorizationFilter@10522dfd]
+2023-10-04T12:20:51.885+01:00  INFO 7392 --- [    Test worker] c.t.E.EruditeEventSystemApplicationTests : Started EruditeEventSystemApplicationTests in 30.38 seconds (process running for 32.171)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
