@@ -29,11 +29,11 @@ import org.springframework.context.annotation.Configuration;
         servers = {
                 @Server(
                         description = "Prod ENV",
-                        url = "https://multi-tenancy-hostel-software-production.up.railway.app"
+                        url = "https://erudite-ticketing-system-production.up.railway.app/"
                 ),
                 @Server(
                         description = "Local ENV",
-                        url = "http://localhost:8080"
+                        url = "http://localhost:80"
                 )
         }
 )

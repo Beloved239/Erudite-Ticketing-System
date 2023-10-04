@@ -34,41 +34,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/organizer")
 @RequiredArgsConstructor
-@OpenAPIDefinition(
-        info = @Info(
-                contact = @Contact(
-                        name = "Beloved",
-                        email = "adettob@gmail.com",
-                        url = "https://www.linkedin.com/in/adebanjo-oluwatobi-6bb25b156/"
-                ),
-                description = "OpenApi documentation for Event Ticketing System",
-                title = "Erudite OpenApi Specification",
-                version = "v1",
-                license = @License(
-                        name = "License name",
-                        url = "https://url.com"
-                ),
-                termsOfService = "Terms of service"
-        ),
-        servers = {
-                @Server(
-                        description = "Prod ENV",
-                        url = "https://url.com"
-                ),
-                @Server(
-                        description = "Local ENV",
-                        url = "http://localhost:8080"
-                )
-        }
-)
-@SecurityScheme(
-        name = "Authorization",
-        description = "JWT auth description",
-        scheme = "bearer",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        in = SecuritySchemeIn.HEADER
-)
 @Tag(
         name = "Organizer Controller REST APIs/Endpoint",
         description = "Endpoints for creating event and other application management"
@@ -83,12 +48,48 @@ public class OrganizerController{
     private final EventService eventService;
 
     //Attendee Endpoints
+    @Operation(
+            description = "Get Single User endpoint",
+            summary = "This endpoint is used to get Registered Users details from the database",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/single")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getSingleUser(@RequestParam(value = "userId") Long userId){
         return userService.getSingleUserById(userId);
     }
 
+    @Operation(
+            description = "Get All User Endpoint",
+            summary = "This endpoint is used to fetch all registered Organizers from the database",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<CredentialResponse>> getAllOrganizers(@RequestParam(value = "pageNo",defaultValue = "0", required = false) int page,
@@ -96,6 +97,24 @@ public class OrganizerController{
         return userService.getAllOrganizer(page, size);
     }
 
+    @Operation(
+            description = "Get Attendee endpoint",
+            summary = "This endpoint is used to get a single Attendee details from the database by Email",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/single/user")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CustomResponse> getAttendeeByEmail(@RequestParam(value = "email") String email){
@@ -104,8 +123,8 @@ public class OrganizerController{
 
     //Organizer Endpoints
     @Operation(
-            description = "Signup endpoint for organizers",
-            summary = "This endpoint allows user create account",
+            description = "Update Record endpoint for organizers",
+            summary = "This endpoint allow users/organizers to update their records",
             responses = {
                     @ApiResponse(
                             description = "Success",
@@ -127,6 +146,24 @@ public class OrganizerController{
         return userService.updateCredentials(userId, request);
     }
 
+    @Operation(
+            description = "Get Single User/Organizer endpoint",
+            summary = "This endpoint is used to get Registered Users details from the database using organizerId",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/getAll/getSingleOrganizer")
     @PreAuthorize("hasRole('ORGANIZER')")
     @ResponseStatus(HttpStatus.OK)
@@ -136,12 +173,48 @@ public class OrganizerController{
 
 
     //Roles Endpoints
+    @Operation(
+            description = "Create Role endpoint",
+            summary = "This endpoint is used to Create Roles",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CustomResponse> createRole(@RequestBody RoleRequest request){
         return roleService.createRole(request);
     }
 
+    @Operation(
+            description = "Delete Role endpoint",
+            summary = "This endpoint is used to Delete Roles",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @DeleteMapping("/delete/{roleId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ORGANIZER')")
@@ -149,6 +222,24 @@ public class OrganizerController{
         return roleService.deleteRole(roleId);
     }
 
+    @Operation(
+            description = "Get Role endpoint",
+            summary = "This endpoint is used to Create Roles",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/role")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ORGANIZER')")
@@ -156,6 +247,24 @@ public class OrganizerController{
         return roleService.getRoleById(roleId);
     }
 
+    @Operation(
+            description = "Get All Roles endpoint",
+            summary = "This endpoint is used get all created roles",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/get/allRoles")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ORGANIZER')")
@@ -166,6 +275,24 @@ public class OrganizerController{
 
 
     //Payment Endpoints
+    @Operation(
+            description = "Verify Payment endpoint",
+            summary = "This endpoint is used to Verify All Payments",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/verifyPayment")
     @ResponseStatus(HttpStatus.OK)
     public PaymentVerificationResponse paymentVerification(@RequestParam(value = "reference") String reference)
@@ -176,6 +303,24 @@ public class OrganizerController{
 
 
     //Event Image Controller
+    @Operation(
+            description = "Save Image endpoint",
+            summary = "This endpoint is used to save event Images",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ImageResponse> saveEventPicture(@RequestParam("user")Long id,
@@ -185,12 +330,48 @@ public class OrganizerController{
         return service.saveImage(id,file, name, desc);
     }
 
+    @Operation(
+            description = "Get Image endpoint",
+            summary = "This endpoint is used to get event images",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @GetMapping("/picture")
     @ResponseStatus(HttpStatus.OK)
     public EventImages getPicture(@RequestParam("id") Long id) throws IOException {
         return service.getProductImage(id);
     }
 
+    @Operation(
+            description = "Update Event Image Endpoint",
+            summary = "This endpoint is used to get update event Image from the database",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @PutMapping("/update/event/picture")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ImageResponse> replacePicture(@RequestParam("image")Long imageId,
@@ -203,6 +384,24 @@ public class OrganizerController{
 
 
     //Event
+    @Operation(
+            description = "Create Event endpoint",
+            summary = "This endpoint is used to Create A New Event",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    ),
+                    @ApiResponse(
+                            description = "User not found",
+                            responseCode = "400"
+                    )
+            }
+    )
     @PostMapping("/create/event")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<CustomResponse> createEvent(@RequestParam(value = "organizerid")Long id,

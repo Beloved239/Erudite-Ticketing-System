@@ -80,6 +80,11 @@ spring.mail.properties.mail.smtp.ssl=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 
+
+## Usage/Examples
+
+This project has a well-documented OpenAPI (Swagger) interface, which can be accessed [here](https://erudite-ticketing-system-production.up.railway.app/swagger-ui/index.html#/)
+
 ## Key Highlights / Uniqueness
 
 - This software prioritizes security by requiring user email verification before allowing login.

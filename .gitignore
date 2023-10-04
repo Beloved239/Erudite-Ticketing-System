@@ -5,7 +5,8 @@ HELP.md
 #!**/src/main/**/build/
 !**/src/test/**/build/
 #src/main/resources/application.properties
-
+EruditeLogs.txt
+MyQRCode.png
 
 ### STS ###
 
