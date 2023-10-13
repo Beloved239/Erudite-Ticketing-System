@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Configuration;
                         email = "adettob@gmail.com",
                         url = "https://www.linkedin.com/in/adebanjo-oluwatobi-6bb25b156/"
                 ),
-                description = "OpenApi documentation for Event Ticketing System",
-                title = "Erudite OpenApi Specification",
+                description = "OpenApi documentation for EventHub",
+                title = "EventHub OpenApi Specification",
                 version = "v1",
                 license = @License(
                         name = "License name",
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
         ),
         servers = {
                 @Server(
-                        description = "Prod ENV",
+                        description = "Production ENV",
                         url = "https://erudite-ticketing-system-production.up.railway.app/"
                 ),
                 @Server(

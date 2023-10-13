@@ -5,10 +5,14 @@ package com.tobi.Erudite_Event_System.administration;
 import com.google.zxing.WriterException;
 import com.tobi.Erudite_Event_System.dto.*;
 import com.tobi.Erudite_Event_System.event.service.EventService;
+import com.tobi.Erudite_Event_System.users.entity.Users;
 import com.tobi.Erudite_Event_System.users.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("api/identity")
@@ -47,8 +52,8 @@ public class GeneralController {
     )
     @PostMapping("/organizer/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CustomResponse> register(@RequestBody OrganizerSignUpRequest request){
-        return userService.signUp(request);
+    public ResponseEntity<CustomResponse> register(@RequestBody OrganizerSignUpRequest request,  final HttpServletRequest urlRequest){
+        return userService.signUp(request,urlRequest);
 
     }
 
@@ -180,6 +185,11 @@ public class GeneralController {
     public ResponseEntity<CustomEventResponse> discoverEVents(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
                                                               @RequestParam(value = "pageSize", defaultValue = "8", required = false) int size){
         return eventService.getAllUpcomingEvents(page, size);
+    }
+
+    @GetMapping("/sendMail/verify")
+    public void sendEmail(@RequestParam String email) throws MessagingException, UnsupportedEncodingException {
+        userService.sendVerificationMail(email);
     }
 
 

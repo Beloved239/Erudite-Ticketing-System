@@ -12,6 +12,8 @@ import com.tobi.Erudite_Event_System.token.repository.ConfirmationTokenRepositor
 import com.tobi.Erudite_Event_System.users.entity.Users;
 import com.tobi.Erudite_Event_System.users.repository.UserRepository;
 import com.tobi.Erudite_Event_System.utils.ResponseUtils;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,12 +50,11 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
-    private Example example;
 
 
     @Override
     @Transactional
-    public ResponseEntity<CustomResponse> signUp(OrganizerSignUpRequest request) {
+    public ResponseEntity<CustomResponse> signUp(OrganizerSignUpRequest request, final HttpServletRequest urlRequest) {
 
 
         if (!patternMatches(request.getEmail(), ResponseUtils.REGEX_PATTERN)){
@@ -70,7 +72,7 @@ public class UserServiceImpl implements UserService {
         }
         Users users = Users.builder()
                 .email(request.getEmail())
-                .eventDetails(request.getEventDetails())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .isEnabled(false)
                 .build();
 
@@ -79,15 +81,29 @@ public class UserServiceImpl implements UserService {
         userRepository.save(users);
 
         ConfirmationToken confirmationToken = new ConfirmationToken(users);
-        log.info("confirmation token: "+ confirmationToken.getToken());
+        log.info("confirmation token sent");
 
         tokenRepository.save(confirmationToken);
+//        String mailContent = "Hello, "+ users.getEmail()+ ", </p>"+
+//                "<p>Kindly Click on the link to confirm your email address. "+
+//                "<h2 style='color: #057d25; letter-spacing: 0.1em'> "
+//                +applicationUrl(urlRequest)+"/api/identity/organizer/confirmtoken?token="+confirmationToken.getToken()+"  "+
+//                "<p> Thank you. </P> <hr> <br> <b> Central EventHub Ticketing Service.</b>";
+
+//        String mailContentf = "<p> Hi, "+ theUser.getUsername()+ ", </p>"+
+//                "<p>Below is the token to reset your password. "+"" +
+//                "If you did not initiate this request, kindly contact admin at <b>info@techiebros.come</b>.</p>"+
+//                "<h2 style='color: #057d25; letter-spacing: 0.1em'>"+token+"</h2>"+
+//                "<p> Thank you. </P> <hr> <br> <b> Central Estore Service.</b>";
 
         EmailDetails messages = EmailDetails.builder()
                 .subject("Account Created Successfully")
                 .recipient(users.getEmail())
-                .messageBody("Account Created Successfully "+"To confirm your email address, please click here :+" +
-                        "http://localhost:8080/api/identity/organizer/confirmtoken?token="+confirmationToken.getToken())
+                .messageBody("Hello, "+ users.getEmail()+ ",\n"+
+                        "Kindly Click on the link to confirm your email address. "+
+                        applicationUrl(urlRequest)+"/api/identity/organizer/confirmtoken?token="+confirmationToken.getToken()+"  \n"+
+                        "Thank you.\n" +
+                        "EventHub Ticketing Service.")
                 .build();
 
         emailService.sendSimpleEmail(messages);
@@ -95,33 +111,30 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok(CustomResponse.builder()
                 .responseCode(ResponseUtils.ACCOUNT_CREATION_SUCCESS_CODE)
                 .responseMessage(ResponseUtils.ACCOUNT_CREATION_SUCCESS_MESSAGE)
-                .responseBody("Your details is under review and your status will " +
-                        "be confirmed in less than 24 Hours")
+                .responseBody("Kindly proceed to confirm your email address ")
                 .build());
     }
 
     @Override
     public ResponseEntity<CustomResponse> confirmToken(String token) {
-
         ConfirmationToken token1 = tokenRepository.findByToken(token);
         if (token1 !=null){
             Users users = userRepository.findByEmailIgnoreCase(token1.getUsers().getEmail());
             users.setIsEnabled(true);
             String temporaryPassword = ResponseUtils.generateTemporaryPassword();
-            users.setPassword(passwordEncoder.encode(temporaryPassword));
             userRepository.save(users);
             log.info("password: "+ temporaryPassword);
             EmailDetails message = EmailDetails.builder()
                     .recipient(users.getEmail())
                     .subject("Email Confirmed Successfully")
-                    .messageBody("Your temporary password is: "+ temporaryPassword +" \n " +
-                            "kindly proceed to change your password immediately ")
+                    .messageBody("kindly proceed to login ")
                     .build();
             emailService.sendSimpleEmail(message);
             return ResponseEntity.ok(CustomResponse.builder()
                     .responseCode(ResponseUtils.ACCOUNT_CREATION_SUCCESS_CODE)
                     .responseMessage(ResponseUtils.ACCOUNT_CREATION_SUCCESS_MESSAGE)
-                    .responseBody("Email Confirmed Successfully")
+                    .responseBody("Email Confirmed Successfully\n" +
+                            "Kindly proceed to login")
                     .build());
         }
         return ResponseEntity.badRequest().body(CustomResponse.builder()
@@ -136,13 +149,10 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<CustomResponse> login(LoginRequest request) {
         boolean exists = userRepository.existsByEmail(request.getEmail());
         log.info("Attendee status: " + exists);
-
         if (!exists) {
             return createErrorResponse("Incorrect Username or Password. Try Again!");
         }
-
         Optional<Users> attendees = userRepository.findByEmail(request.getEmail());
-
         if (attendees.isEmpty()) {
             return createErrorResponse("Incorrect Username or Password. Try Again!");
         }
@@ -168,6 +178,11 @@ public class UserServiceImpl implements UserService {
                         .build()
         );
 
+    }
+
+    public void sendVerificationMail(String url, Users user)throws MessagingException, UnsupportedEncodingException {
+        url= "www.google.com";
+        emailService.sendVerificationMail(url, user);
     }
 
 
@@ -316,6 +331,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void sendVerificationMail(String email) throws MessagingException, UnsupportedEncodingException {
+        String url ="www.google.com";
+        Users users =userRepository.findByEmail(email).get();
+        emailService.sendVerificationMail(url,users);
+    }
+
     public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
                 .matcher(emailAddress)
@@ -351,6 +373,10 @@ public class UserServiceImpl implements UserService {
     }
     public void sendMail(EmailDetails emailDetails){
         emailService.sendSimpleEmail(emailDetails);
+    }
+
+    public static String applicationUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 
 }

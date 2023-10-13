@@ -7,6 +7,7 @@ import com.tobi.Erudite_Event_System.email.entity.Message;
 import com.tobi.Erudite_Event_System.email.repository.MessageRepository;
 import com.tobi.Erudite_Event_System.email.service.EmailService;
 
+import com.tobi.Erudite_Event_System.users.entity.Users;
 import com.tobi.Erudite_Event_System.utils.ResponseUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -21,6 +22,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Pattern;
 
 @Service
@@ -111,6 +113,26 @@ public class  EmailServiceImpl implements EmailService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void sendVerificationMail(String url, Users user) throws MessagingException, UnsupportedEncodingException {
+        String subject = "Email Verification";
+        String senderName = "Medict Service";
+        String mailContent = "<p> Hi, "+ user.getEmail()+ ", </p>"+
+                "<p>Thank you for registering with us. "+"" +
+                "Please, follow the link below to complete your registration.</p>"+
+                "<a href=\"" +url+ "\">Verify your email to activate your account</a>"+
+                "<p> Thank you. </P> <hr> <br> <b> Central Estore Service.</b>";
+        MimeMessage message = javaMailSender.createMimeMessage();
+        var messageHelper = new MimeMessageHelper(message);
+        messageHelper.setFrom("adettob@gmail.com", senderName);
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(mailContent, true);
+        javaMailSender.send(message);
+    }
+
+
 
 
     public static boolean patternMatches(String emailAddress, String regexPattern) {

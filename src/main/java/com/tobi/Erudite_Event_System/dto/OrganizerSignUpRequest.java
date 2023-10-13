@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrganizerSignUpRequest {
     private String email;
-    private String eventDetails;
+    private String password;
 }
