@@ -6,13 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingRequestValueException;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface EventService {
     ResponseEntity<CustomResponse> createEvent(Long id, EventDto eventDto);
 
     ResponseEntity<CustomEventResponse> getAllEventByName(int page, int size, String eventName);
 
-    ResponseEntity<CustomEventResponse> getAllUpcomingEvents(int page, int size);
+    ResponseEntity<DiscoverEventResponse> getAllUpcomingEvents(int page, int size);
     ResponseEntity<BookEventResponse> bookEvent(Long organizerId, Long eventId, BookEventRequest request) throws IOException, MissingRequestValueException, WriterException;
 
 

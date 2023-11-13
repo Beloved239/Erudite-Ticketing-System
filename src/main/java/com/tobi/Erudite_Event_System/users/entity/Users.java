@@ -34,6 +34,8 @@ public class Users {
     private Boolean isEnabled;
     private String eventDetails;
     private String password;
+    @Column(name = "organizer_id")
+    private String organizerId;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class BookEventRequest {
+
     private String nameOfAttendee;
     private String email;
     private String phoneNumber;

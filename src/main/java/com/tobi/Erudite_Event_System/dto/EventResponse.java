@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventResponse {
+    private Long id;
     private String eventName;
     private String eventDescription;
     private String eventLocation;
@@ -24,5 +25,6 @@ public class EventResponse {
     private String ticketType;
     private Integer ticketCapacity;
     private Integer ticketPrice;
+    private String uniqueId;
 
 }

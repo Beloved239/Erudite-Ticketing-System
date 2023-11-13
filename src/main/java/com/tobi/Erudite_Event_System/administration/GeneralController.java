@@ -16,19 +16,21 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@RestController
-@RequestMapping("api/identity")
-@RequiredArgsConstructor
 @Tag(
         name = "General Controller REST APIs/Endpoint",
         description = "Endpoints for sign up, sign in, discover events and book event"
 )
+@RestController
+@RequestMapping("api/identity")
+@RequiredArgsConstructor
+@Validated
 public class GeneralController {
 
     private final UserService userService;
@@ -182,7 +184,7 @@ public class GeneralController {
     )
     @GetMapping("/discover/allEvent")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<CustomEventResponse> discoverEVents(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
+    public ResponseEntity<DiscoverEventResponse> discoverEVents(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int page,
                                                               @RequestParam(value = "pageSize", defaultValue = "8", required = false) int size){
         return eventService.getAllUpcomingEvents(page, size);
     }

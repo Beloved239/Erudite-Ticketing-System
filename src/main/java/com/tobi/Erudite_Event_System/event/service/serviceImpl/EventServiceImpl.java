@@ -68,6 +68,7 @@ public class EventServiceImpl implements EventService {
                     .ticketPrice(eventDto.getTicketPrice())
                     .ticketDescription(eventDto.getTicketDescription())
                     .users(organizer.get())
+                    .uniqueId(ResponseUtils.generateUniqueAlphaNumericString(10))
                     .build();
             repository.save(event);
 
@@ -106,6 +107,7 @@ public class EventServiceImpl implements EventService {
             List<EventResponse> responses = new ArrayList<>();
             for (Events element: eventsList){
                 responses.add(EventResponse.builder()
+                                .id(element.getId())
                                 .eventName(element.getEventName())
                                 .eventDescription(element.getEventDescription())
                                 .eventLocation(element.getEventLocation())
@@ -129,17 +131,16 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public ResponseEntity<CustomEventResponse> getAllUpcomingEvents(int page, int size) {
+    public ResponseEntity<DiscoverEventResponse> getAllUpcomingEvents(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page,size, Sort.by("startDate").ascending());
 
         LocalTime now = LocalTime.now();
         boolean existsBeforeToday = repository.existsByStartTimeBefore(now);
-        if (existsBeforeToday) {
-            return ResponseEntity.badRequest().body(CustomEventResponse
+        if (!existsBeforeToday) {
+            return ResponseEntity.badRequest().body(DiscoverEventResponse
                     .builder()
-                    .responseCode(ResponseUtils.UN_SUCCESSFUL_CODE)
-                    .responseMessage(ResponseUtils.UN_SUCCESSFUL_MESSAGE)
-                    .eventResponse(null)
+                    .message(ResponseUtils.UN_SUCCESSFUL_MESSAGE)
+                    .eventResponses(null)
                     .build());
         } else {
             LocalDate today = LocalDate.now();
@@ -148,6 +149,7 @@ public class EventServiceImpl implements EventService {
             List<EventResponse> responses = new ArrayList<>();
             for (Events element : eventsList) {
                 responses.add(EventResponse.builder()
+                        .id(element.getId())
                         .eventName(element.getEventName())
                         .eventDescription(element.getEventDescription())
                         .eventLocation(element.getEventLocation())
@@ -160,10 +162,9 @@ public class EventServiceImpl implements EventService {
                         .endDate(element.getEndDate())
                         .build());
             }
-            return ResponseEntity.ok().body(CustomEventResponse.builder()
-                    .responseCode(ResponseUtils.SUCCESS_CODE)
-                    .responseMessage(ResponseUtils.SUCCESS_MESSAGE)
-                    .eventResponse(responses)
+            return ResponseEntity.ok().body(DiscoverEventResponse.builder()
+                    .message(ResponseUtils.SUCCESS_MESSAGE)
+                    .eventResponses(responses)
                     .build());
         }
 

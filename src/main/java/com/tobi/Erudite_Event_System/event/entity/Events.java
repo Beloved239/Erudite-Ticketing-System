@@ -41,6 +41,8 @@ public class Events {
     private Integer ticketCapacity;
     @Column(nullable = false)
     private Integer ticketPrice;
+    @Column(name = "unique_id")
+    private String uniqueId;
 
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
     private List<Booking> bookings;

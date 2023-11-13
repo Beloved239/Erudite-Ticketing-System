@@ -13,10 +13,16 @@ import org.springframework.web.bind.MissingRequestValueException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.security.SecureRandom;
 import java.util.Random;
+import java.util.UUID;
 
 @Component
 public class ResponseUtils {
+
+    private ResponseUtils(){
+
+    }
     public static final String EMAIL_EXISTS_CODE = "001";
     public static final String EMAIL_EXISTS_MESSAGE = "User with this email address already exists";
     public static final String LOG_IN_CODE = "002";
@@ -40,10 +46,11 @@ public class ResponseUtils {
     public static final String USER_ROLE_EXIST_MESSAGE = "The Provided Role Exist";
     public static final String EMAIL_IS_NOT_VALID_CODE = "009";
     public static final String EMAIL_IS_NOT_VALID_MESSAGE = "Enter a valid email format";
-    public static final String SUCCESS_CODE = "010";
+
     public static final String UN_SUCCESSFUL_CODE = "010";
     public static final String UN_SUCCESSFUL_MESSAGE = "Unsuccessful";
     public static final String SUCCESS_MESSAGE = "Successful";
+    public static final String SUCCESS_CODE = "010";
     public static final String ROLE_DELETED_MESSAGE = "Role deleted Successfully";
     public static final String ROLE_DELETED_CODE = "011";
     public static final String ROLE_DOES_NOT_EXIST_CODE = "012";
@@ -61,6 +68,41 @@ public class ResponseUtils {
     public static final String PAYSTACK_VERIFY = "https://api.paystack.co/transaction/verify/";
     public static final String GETATTENDEEURL = "http://localhost:8080/api/identity/attendee/single/attendee?email=";
 
+
+//    public static String generateClientCode(int length) {
+//        String clientCode = "";
+//        int x;
+//        char[] stringChars = new char[length];
+//
+//        for (int i = 0; i < length; i++) {
+//            Random random = new Random();
+//            x = random.nextInt(9);
+//            stringChars[i] = Integer.toString(x).toCharArray()[0];
+//        }
+//
+//        clientCode = new String(stringChars);
+//        return clientCode.trim();
+//    }
+
+    private static final String ALPHABET = "EVENT";
+    private static final String DIGITS = "0123456789";
+    private static final SecureRandom RANDOM = new SecureRandom();
+
+    public static String generateUniqueAlphaNumericString(int length) {
+        StringBuilder sb = new StringBuilder(length);
+        // Generate the first 4 characters as alphabets
+        for (int i = 0; i < 4; i++) {
+            int randomIndex = RANDOM.nextInt(ALPHABET.length());
+            sb.append(ALPHABET.charAt(randomIndex));
+        }
+        // Generate the remaining characters as digits
+        for (int i = 4; i < length; i++) {
+            int randomIndex = RANDOM.nextInt(DIGITS.length());
+            sb.append(DIGITS.charAt(randomIndex));
+        }
+
+        return sb.toString();
+    }
 
 
 

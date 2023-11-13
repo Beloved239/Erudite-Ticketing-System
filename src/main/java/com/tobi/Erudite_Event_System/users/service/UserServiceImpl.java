@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
         Users users = Users.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .organizerId(ResponseUtils.generateUniqueAlphaNumericString(8))
                 .isEnabled(false)
                 .build();
 
@@ -157,9 +158,8 @@ public class UserServiceImpl implements UserService {
             return createErrorResponse("Incorrect Username or Password. Try Again!");
         }
 
-        Users users = attendees.get();
         String password = request.getPassword();
-        String hashedPassword = users.getPassword();
+        String hashedPassword = attendees.get().getPassword();
 
         if (!passwordEncoder.matches(password, hashedPassword)) {
             return createErrorResponse("Incorrect Username or Password. Try Again!");

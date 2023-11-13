@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-
-public class EventData {
-    private String ticketType;
-    private Integer price;
-    private Integer quantity;
-    private Integer subTotal;
+public class DiscoverEventResponse {
+    private String message;
+    private List<EventResponse> eventResponses;
 }
