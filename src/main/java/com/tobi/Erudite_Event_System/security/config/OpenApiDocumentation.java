@@ -35,6 +35,11 @@ import org.springframework.context.annotation.Configuration;
                         description = "Local ENV",
                         url = "http://localhost:80"
                 )
+        },
+        security = {
+                @SecurityRequirement(
+                        name = "bearerAuth"
+                )
         }
 )
 @SecurityScheme(
